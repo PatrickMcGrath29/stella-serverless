@@ -21,3 +21,5 @@ var/
 
 node_modules
 .idea
+
+__pycache__

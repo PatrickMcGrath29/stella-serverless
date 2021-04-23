@@ -1,5 +1,5 @@
-service: utilities
-app: stella
+service: stella-serverless
+app: stella-serverless
 org: patrickmcgrath29
 
 provider:
@@ -39,6 +39,6 @@ functions:
     handler: src/api.delete
     events:
       - http:
-        path: stella/{id}
-        method: delete
-        cors: true
+          path: stella/{id}
+          method: delete
+          cors: true
