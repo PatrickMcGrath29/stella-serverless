@@ -23,7 +23,7 @@ functions:
     handler: src/api.create
     events:
       - http:
-          path: stella
+          path: api/v1/alias
           method: post
           cors: true
 
@@ -31,7 +31,7 @@ functions:
     handler: src/api.get
     events:
       - http:
-          path: stella/{id}
+          path: api/v1/alias/{id}
           method: get
           cors: true
 
@@ -39,6 +39,13 @@ functions:
     handler: src/api.delete
     events:
       - http:
-          path: stella/{id}
+          path: api/v1/alias/{id}
           method: delete
           cors: true
+
+plugins:
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    httpPort: 4500
