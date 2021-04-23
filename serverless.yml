@@ -1,0 +1,44 @@
+service: utilities
+app: stella
+org: patrickmcgrath29
+
+provider:
+  name: aws
+  runtime: python3.8
+  environment:
+    STELLA_DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.STELLA_DYNAMODB_TABLE}"
+
+functions:
+  create:
+    handler: src/api.create
+    events:
+      - http:
+          path: stella
+          method: post
+          cors: true
+
+  get:
+    handler: src/api.get
+    events:
+      - http:
+          path: stella/{id}
+          method: get
+          cors: true
+
+  delete:
+    handler: src/api.delete
+    events:
+      - http:
+        path: stella/{id}
+        method: delete
+        cors: true

@@ -1,0 +1,13 @@
+{
+  "name": "stella-serverless",
+  "version": "1.0.0",
+  "description": "A URL shortener",
+  "author": "Patrick McGrath",
+  "license": "MIT",
+  "dependencies": {
+    "serverless-dynamodb-local": "^0.2.39"
+  },
+  "devDependencies": {
+    "serverless-python-requirements": "^5.1.0"
+  }
+}
