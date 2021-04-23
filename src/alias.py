@@ -1,8 +1,6 @@
-from pydantic import AnyUrl
-from pydantic.dataclasses import dataclass
+from pydantic import AnyUrl, BaseModel
 
 
-@dataclass
-class Alias:
+class Alias(BaseModel):
     short_name: str
     full_url: AnyUrl
