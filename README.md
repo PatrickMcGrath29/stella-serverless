@@ -5,6 +5,7 @@
 ```shell
 brew install serverless
 brew install yarn
+brew install pyenv
 ```
 
 ### Repository Setup
