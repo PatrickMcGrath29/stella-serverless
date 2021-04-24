@@ -1,7 +1,7 @@
 from flask import Flask, make_response, request
 from pydantic import ValidationError
 
-from src.alias import Alias
+from src.models.alias import Alias
 
 app = Flask(__name__)
 
@@ -18,6 +18,7 @@ def create_alias():
 
     try:
         alias = Alias(short_name=short_name, full_url=full_url)
+        alias.save()
     except ValidationError as exc:
         return make_response({"errors": exc.errors()}, 400)
 

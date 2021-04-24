@@ -17,6 +17,8 @@ custom:
   dynamodb:
     start:
       migrate: true
+    stages:
+      - dev
 
 provider:
   name: aws
@@ -33,7 +35,7 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource:
-        - { "Fn::GetAtt": ["UsersDynamoDBTable", "Arn" ] }
+        - { "Fn::GetAtt": ["AliasDynamoDBTable", "Arn" ] }
   environment:
     STELLA_DYNAMODB_TABLE: ${self:custom.tableName}
 
@@ -46,7 +48,7 @@ functions:
 
 resources:
   Resources:
-    UsersDynamoDBTable:
+    AliasDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
       Properties:
         AttributeDefinitions:
