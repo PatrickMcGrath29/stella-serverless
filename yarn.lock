@@ -396,7 +396,7 @@ aws-sdk@^2.7.0:
     uuid "3.3.2"
     xml2js "0.4.19"
 
-aws-sdk@^2.834.0:
+aws-sdk@^2.756.0, aws-sdk@^2.834.0:
   version "2.892.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.892.0.tgz#adec48f52f4b6f5c576dcbfac020bcec1eed3a25"
   integrity sha512-OOXJ15AnJJMHZYXJQVy22Wjnp5GrZCfvCxmoZuXdsLNs8M+BL4mfBqma82+UkM2NhJgLYuAhDfvFUBob6VGIWw==
@@ -1959,6 +1959,14 @@ semver@^7.3.4:
   integrity sha512-PoeGJYh8HK4BTO/a9Tf6ZG3veo/A7ZVsYrSA6J8ny9nb3B1VrpkuN+z9OE5wfE5p6H4LchYZsegiQgbJD94ZFQ==
   dependencies:
     lru-cache "^6.0.0"
+
+serverless-domain-manager@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/serverless-domain-manager/-/serverless-domain-manager-5.1.0.tgz#44c975b4adeac6b32507c92313ee001735d56c55"
+  integrity sha512-uGLGr9nWTupimWxVwz/2S/fK+YULsg8hQ0ZddS1DNerzctIVQBXVbLMGUJv34a9a5HV0YPvVqCA/JBNI7VOSvA==
+  dependencies:
+    aws-sdk "^2.756.0"
+    chalk "^4.1.0"
 
 serverless-dynamodb-local@^0.2.39:
   version "0.2.39"

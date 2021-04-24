@@ -49,3 +49,8 @@ plugins:
 custom:
   serverless-offline:
     httpPort: 4500
+  customDomain:
+    domainName: urls.patrickmcgrath.io
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true
