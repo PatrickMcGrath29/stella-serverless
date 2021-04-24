@@ -42,7 +42,6 @@ class DynamoModel(BaseModel):
         return _dynamo_db_client().put_item(
             TableName=self.table_name,
             Item=self.to_dynamo(),
-            C
         )
 
     def get(self):
