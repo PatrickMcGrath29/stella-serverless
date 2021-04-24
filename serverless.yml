@@ -2,11 +2,27 @@ service: stella-serverless
 app: stella-serverless
 org: patrickmcgrath29
 
+plugins:
+  - serverless-python-requirements
+  - serverless-wsgi
+  - serverless-dynamodb-local
+
+custom:
+  tableName: 'alias-${self:provider.stage}'
+  wsgi:
+    app: src/api.app
+    packRequirements: false
+  pythonRequirements:
+    dockerizePip: non-linux
+  dynamodb:
+    start:
+      migrate: true
+
 provider:
   name: aws
   runtime: python3.8
-  environment:
-    STELLA_DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+  stage: dev
+  region: us-east-1
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -16,41 +32,32 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.STELLA_DYNAMODB_TABLE}"
+      Resource:
+        - { "Fn::GetAtt": ["UsersDynamoDBTable", "Arn" ] }
+  environment:
+    STELLA_DYNAMODB_TABLE: ${self:custom.tableName}
 
 functions:
-  create:
-    handler: src/api.create
+  app:
+    handler: wsgi_handler.handler
     events:
-      - http:
-          path: api/v1/alias
-          method: post
-          cors: true
+      - http: ANY /
+      - http: 'ANY {proxy+}'
 
-  get:
-    handler: src/api.get
-    events:
-      - http:
-          path: api/v1/alias/{id}
-          method: get
-          cors: true
-
-  delete:
-    handler: src/api.delete
-    events:
-      - http:
-          path: api/v1/alias/{id}
-          method: delete
-          cors: true
-
-plugins:
-  - serverless-offline
-
-custom:
-  serverless-offline:
-    httpPort: 4500
-  customDomain:
-    domainName: urls.patrickmcgrath.io
-    basePath: ''
-    stage: ${self:provider.stage}
-    createRoute53Record: true
+resources:
+  Resources:
+    UsersDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: short_name
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: short_name
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.tableName}

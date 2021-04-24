@@ -8,8 +8,7 @@
     "serverless-dynamodb-local": "^0.2.39"
   },
   "devDependencies": {
-    "serverless-domain-manager": "^5.1.0",
-    "serverless-offline": "^6.9.0",
-    "serverless-python-requirements": "^5.1.0"
+    "serverless-python-requirements": "^5.1.0",
+    "serverless-wsgi": "^1.7.6"
   }
 }

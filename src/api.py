@@ -1,69 +1,34 @@
-import json
-from dataclasses import dataclass
-from enum import Enum
-
+from flask import Flask, make_response, request
 from pydantic import ValidationError
 
 from src.alias import Alias
 
+app = Flask(__name__)
 
-def create(event, context):
-    params = _params_from_event(event, ['short_name', 'full_url'])
-    short_name = params['short_name']
-    full_url = params['full_url']
+
+@app.route('/', methods=['POST'])
+def create_alias():
+    # TODO: Clean up validation logic
+    request_json = request.get_json()
+    if request_json is None or not all(key in request_json for key in ['short_name', 'full_url']):
+        return make_response('Invalid Request', 400)
+
+    short_name = request_json['short_name']
+    full_url = request_json['full_url']
 
     try:
         alias = Alias(short_name=short_name, full_url=full_url)
     except ValidationError as exc:
-        return HttpResponse(HttpStatusCode.BAD_REQUEST, exc.errors()).as_json
+        return make_response({"errors": exc.errors()}, 400)
 
-    return HttpResponse(HttpStatusCode.OK, alias.dict()).as_json
-
-
-def get(event, context):
-    print("get")
-    print(event)
-
-    return HttpResponse(HttpStatusCode.OK, {"message": "success"}).as_json
+    return make_response(alias.dict_with_secret_key(), 200)
 
 
-def delete(event, context):
-    print("delete")
-    print(event)
-
-    return HttpResponse(HttpStatusCode.OK, {"message": "success"}).as_json
+@app.route('/<short_name>', methods=['GET'])
+def get(short_name):
+    return make_response({'message': 'success'}, 200)
 
 
-def _params_from_event(event: dict, fields: list):
-    body_json = json.loads(event['body'])
-
-    return {
-        field: body_json[field]
-        for field in fields
-        if field in body_json
-    }
-
-
-class HttpStatusCode(Enum):
-    OK = 200
-    NOT_FOUND = 404
-    BAD_REQUEST = 400
-
-
-@dataclass
-class HttpResponse:
-    status_code: HttpStatusCode
-    body: dict
-
-    @property
-    def as_json(self):
-        wrapped_body = {
-            'statusCode': self.status_code.value,
-            'body': self.body
-        }
-
-        return {
-            'statusCode': self.status_code.value,
-            'headers': {'Content-Type': 'application/json'},
-            'body': json.dumps(wrapped_body)
-        }
+@app.route('/<short_name>', methods=['DELETE'])
+def delete(short_name):
+    return make_response({'message': 'success'}, 200)
