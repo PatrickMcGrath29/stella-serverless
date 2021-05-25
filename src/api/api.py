@@ -11,16 +11,14 @@ app = Flask(__name__)
 def create_alias():
     # TODO: Clean up validation logic
     request_json = request.get_json()
-    if request_json is None or not all(
-        key in request_json for key in ["name", "full_url"]
-    ):
+    if request_json is None or not all(key in request_json for key in ["name", "url"]):
         return make_response({"errors": "invalid request"}, 400)
 
     name = request_json["name"]
-    full_url = request_json["full_url"]
+    url = request_json["url"]
 
     try:
-        alias = Alias(name=name, full_url=full_url)
+        alias = Alias(name=name, url=url)
         alias.save()
     except ValidationError as exc:
         return make_response({"errors": exc.errors()}, 400)

@@ -28,18 +28,18 @@ class AliasService:
 
         return AliasData.from_orm(alias)
 
-    def create_alias(self, name: str, full_url: str) -> AliasData:
-        """Create a new Alias with the given name and full_url.
+    def create_alias(self, name: str, url: str) -> AliasData:
+        """Create a new Alias with the given name and url.
 
         Args:
             name: The alias name.
-            full_url: The full URL that the alias will redirect to.
+            url: The full URL that the alias will redirect to.
 
         Returns:
             An AliasData object.
         """
         try:
-            alias = Alias(name=name, full_url=full_url)
+            alias = Alias(name=name, url=url)
             alias.save()
         except NotUniqueError:
             raise AliasAlreadyExistsException(

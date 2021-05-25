@@ -9,7 +9,7 @@ connect(host=os.environ["CONNECTION_STRING"])
 
 class Alias(Document):
     name = StringField(required=True, unique=True)
-    full_url = URLField(schemes=["http", "https"], required=True)
+    url = URLField(schemes=["http", "https"], required=True)
     secret_key = StringField()
 
     def __init__(self, *args, **values):
@@ -19,7 +19,7 @@ class Alias(Document):
 
 class AliasData(BaseModel):
     name: str
-    full_url: AnyHttpUrl
+    url: AnyHttpUrl
 
     class Config:
         orm_mode = True
