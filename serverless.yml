@@ -5,7 +5,7 @@ org: patrickmcgrath29
 plugins:
   - serverless-python-requirements
   - serverless-wsgi
-  - serverless-dynamodb-local
+  - serverless-dotenv-plugin
 
 custom:
   tableName: 'alias-${self:provider.stage}'
@@ -36,8 +36,6 @@ provider:
         - dynamodb:DeleteItem
       Resource:
         - { "Fn::GetAtt": ["AliasDynamoDBTable", "Arn" ] }
-  environment:
-    STELLA_DYNAMODB_TABLE: ${self:custom.tableName}
 
 functions:
   app:
@@ -45,21 +43,3 @@ functions:
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
-
-resources:
-  Resources:
-    AliasDynamoDBTable:
-      Type: 'AWS::DynamoDB::Table'
-      Properties:
-        AttributeDefinitions:
-          -
-            AttributeName: short_name
-            AttributeType: S
-        KeySchema:
-          -
-            AttributeName: short_name
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: ${self:custom.tableName}

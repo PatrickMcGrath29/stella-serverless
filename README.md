@@ -3,9 +3,7 @@
 ## Setup Instructions
 ### Dependencies
 ```shell
-brew install serverless
-brew install yarn
-brew install pyenv
+brew install serverless yarn pyenv mongodb-community
 ```
 
 ### Repository Setup
