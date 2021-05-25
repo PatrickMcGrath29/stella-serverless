@@ -8,7 +8,7 @@ connect(host=os.environ["CONNECTION_STRING"])
 
 
 class Alias(Document):
-    short_name = StringField(required=True, unique=True)
+    name = StringField(required=True, unique=True)
     full_url = URLField(schemes=["http", "https"], required=True)
     secret_key = StringField()
 
@@ -18,7 +18,7 @@ class Alias(Document):
 
 
 class AliasData(BaseModel):
-    short_name: str
+    name: str
     full_url: AnyHttpUrl
 
     class Config:
