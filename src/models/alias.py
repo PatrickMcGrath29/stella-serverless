@@ -1,10 +1,7 @@
-import os
 import secrets
 
-from mongoengine import Document, StringField, URLField, connect
+from mongoengine import Document, StringField, URLField
 from pydantic import AnyHttpUrl, BaseModel
-
-connect(host=os.environ["CONNECTION_STRING"])
 
 
 class Alias(Document):

@@ -21,5 +21,6 @@ var/
 node_modules
 .idea
 .dynamodb
+.env
 
 __pycache__

@@ -15,6 +15,8 @@ pip install -r requirements.txt
 pip install -r test_requirements.txt
 
 yarn install
+
+cp .env.sample .env # and edit accordingly
 ```
 
 ## Local Development
