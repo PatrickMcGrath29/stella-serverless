@@ -18,17 +18,3 @@ yarn install
 
 cp .env.sample .env # and edit accordingly
 ```
-
-## Local Development
-### Local Testing
-To test the Lambda functions locally you can use the `serverless-offline` plugin. To start a local webserver running
-the Lambda endpoints run `sls offline` in your terminal.
-
-### Debugging
-To enable local debugging of the Python lambda functions on PyCharm, execute the following bash script.
-
-```shell
-FILE_NAME=node_modules/serverless-offline/dist/lambda/handler-runner/python-runner/invoke.py
-echo "pydevd_pycharm.settrace('localhost', port=50059, stdoutToServer=True, stderrToServer=True)" | cat - $FILE_NAME > temp && mv temp $FILE_NAME
-echo "import pydevd_pycharm" | cat - $FILE_NAME > temp && mv temp $FILE_NAME
-```

@@ -1,6 +1,8 @@
+import secrets
+
 from mongoengine import DoesNotExist, NotUniqueError
 
-from src.models import Alias, AliasData
+from src.models import Alias, AliasData, AliasDataCreated
 
 
 class AliasNotFoundException(Exception):
@@ -28,7 +30,7 @@ class AliasService:
 
         return AliasData.from_orm(alias)
 
-    def create_alias(self, name: str, url: str) -> AliasData:
+    def create_alias(self, name: str, url: str) -> AliasDataCreated:
         """Create a new Alias with the given name and url.
 
         Args:
@@ -39,16 +41,16 @@ class AliasService:
             An AliasData object.
         """
         try:
-            alias = Alias(name=name, url=url)
+            alias = Alias(name=name, url=url, secret_key=secrets.token_urlsafe())
             alias.save()
         except NotUniqueError:
             raise AliasAlreadyExistsException(
                 "An alias already exists with the given name."
             )
 
-        return AliasData.from_orm(alias)
+        return AliasDataCreated.from_orm(alias)
 
-    def delete_alias(self, name: str, secret_key: str) -> AliasData:
+    def delete_alias(self, name: str, secret_key: str):
         """Delete an existing Alias.
 
         Args:
@@ -59,10 +61,8 @@ class AliasService:
             The secret key for the alias being deleted. This is returned when an Alias is first created.
         """
         try:
-            alias = Alias.objects.get(name=name, secret_key=secret_key).delete()
+            Alias.objects.get(name=name, secret_key=secret_key).delete()
         except DoesNotExist:
             raise AliasNotFoundException(
                 "Alias not found with given short name and secret key."
             )
-
-        return AliasData.from_orm(alias)

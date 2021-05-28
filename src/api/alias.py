@@ -71,8 +71,3 @@ class AliasAPI(MethodView):
             )
 
         return make_response({"message": "success"}, 200)
-
-
-alias_view = AliasAPI.as_view("alias_api")
-app.add_url_rule("/alias/<string:name>", view_func=alias_view, methods=["GET"])
-app.add_url_rule("/alias/", view_func=alias_view, methods=["POST", "DELETE"])
