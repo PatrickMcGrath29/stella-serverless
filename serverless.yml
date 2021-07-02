@@ -8,34 +8,15 @@ plugins:
   - serverless-dotenv-plugin
 
 custom:
-  tableName: 'alias-${self:provider.stage}'
   wsgi:
-    app: src/api.app
+    app: src/app.app
     packRequirements: false
-  pythonRequirements:
-    dockerizePip: non-linux
-  dynamodb:
-    start:
-      migrate: true
-    stages:
-      - dev
 
 provider:
   name: aws
   runtime: python3.8
   stage: dev
   region: us-east-1
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
-      Resource:
-        - { "Fn::GetAtt": ["AliasDynamoDBTable", "Arn" ] }
 
 functions:
   app:

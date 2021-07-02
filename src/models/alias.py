@@ -1,5 +1,3 @@
-from typing import Any, Optional
-
 from mongoengine import Document, StringField, URLField
 from pydantic import AnyHttpUrl, BaseModel
 

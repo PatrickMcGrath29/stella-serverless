@@ -10,7 +10,6 @@ from src.services import (
     AliasNotFoundException,
     AliasService,
 )
-from src.settings import app
 
 
 class CreateAliasForm(FlaskForm):

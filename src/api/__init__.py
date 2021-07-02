@@ -1,1 +1,1 @@
-from alias import *
+from .alias import *
