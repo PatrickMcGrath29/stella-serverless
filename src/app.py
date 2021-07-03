@@ -6,9 +6,10 @@ from flask_mongoengine import MongoEngine
 from src.api import AliasAPI
 
 app = Flask(__name__)
-db = MongoEngine(app)
 
 app.config["MONGODB_SETTINGS"] = {"host": os.environ["CONNECTION_STRING"]}
+db = MongoEngine(app)
+
 app.config["WTF_CSRF_ENABLED"] = False
 
 alias_view = AliasAPI.as_view("alias_api")
