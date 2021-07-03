@@ -11,10 +11,14 @@ brew install serverless yarn pyenv mongodb-community
 pyenv virtualenv 3.8.0 stella-serverless
 pyenv local stella-serverless
 
-pip install -r requirements.txt
-pip install -r test_requirements.txt
+pipenv install
 
 yarn install
 
 cp .env.sample .env # and edit accordingly
+```
+
+### Deploying
+```shell
+sls deploy
 ```

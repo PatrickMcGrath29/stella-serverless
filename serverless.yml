@@ -6,16 +6,22 @@ plugins:
   - serverless-python-requirements
   - serverless-wsgi
   - serverless-dotenv-plugin
+  - serverless-domain-manager
 
 custom:
   wsgi:
     app: src.app
     packRequirements: false
+  customDomain:
+    domainName: urls.patrickmcgrath.io
+    basePath: ''
+    stage: prod
+    createRoute53Record: true
 
 provider:
   name: aws
   runtime: python3.8
-  stage: dev
+  stage: prod
   region: us-east-1
 
 functions:
@@ -23,4 +29,6 @@ functions:
     handler: wsgi_handler.handler
     events:
       - http: ANY /
+        cors: true
       - http: 'ANY {proxy+}'
+        cors: true

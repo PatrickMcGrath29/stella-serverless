@@ -1,11 +1,13 @@
 import os
 
 from flask import Flask
+from flask_cors import CORS
 from flask_mongoengine import MongoEngine
 
 from src.api import AliasAPI
 
 app = Flask(__name__)
+CORS(app)
 
 app.config["MONGODB_SETTINGS"] = {"host": os.environ["CONNECTION_STRING"]}
 db = MongoEngine(app)

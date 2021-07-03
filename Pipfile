@@ -11,6 +11,7 @@ mongoengine = "==0.23.1"
 pydantic = "==1.8.2"
 WTForms = "==2.3.3"
 typing-extensions = "*"
+flask-cors = "*"
 
 [dev-packages]
 ipython= "7.22.0"
