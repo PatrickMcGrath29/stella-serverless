@@ -4,7 +4,7 @@ from mongoengine import ValidationError
 from wtforms import StringField
 from wtforms.validators import InputRequired
 
-from src.api.utils import json_response
+from .utils import json_response
 from src.services import (
     AliasAlreadyExistsException,
     AliasNotFoundException,

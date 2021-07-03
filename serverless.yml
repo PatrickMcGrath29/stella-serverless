@@ -9,7 +9,7 @@ plugins:
 
 custom:
   wsgi:
-    app: src/app.app
+    app: src.app
     packRequirements: false
 
 provider:
